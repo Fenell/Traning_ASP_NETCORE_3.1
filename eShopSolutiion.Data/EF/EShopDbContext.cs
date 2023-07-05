@@ -34,6 +34,8 @@ namespace eShopSolutiion.Data.EF
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			//Configure using Fluent API
+
 			modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
 			modelBuilder.ApplyConfiguration(new CartConfiguration());
 			modelBuilder.ApplyConfiguration(new CategoryConfiguration());
@@ -48,6 +50,26 @@ namespace eShopSolutiion.Data.EF
 			modelBuilder.ApplyConfiguration(new PromotionConfiguration());
 			modelBuilder.ApplyConfiguration(new TransactionConfiguration());
 
+			//Data seeding
+			//Viết kiểu này dài vc
+
+			//modelBuilder.Entity<AppConfig>().HasData(
+			//	new AppConfig() { Key = "Home title", Value = "This is home page of EShopSolution" },
+			//	new AppConfig() { Key = "HomeKeyword", Value = "This is key word of EShopSolution" }
+			//);
+
 		}
+
+		public DbSet<AppConfig> AppConfigs { get; set; }
+		public DbSet<Cart> Carts { get; set; }
+		public DbSet<Category> Categories { get; set; }
+		public DbSet<Contact> Contacts { get; set; }
+		public DbSet<Order> Orders { get; set; }
+		public DbSet<OrderDetail> OrderDetails { get; set; }
+		public DbSet<Product> Products { get; set; }
+		public DbSet<ProductInCategory> ProductInCategories { get; set; }
+		public DbSet<Promotion> Promotions { get; set; }
+		public DbSet<Transaction> Transactions { get; set; }
+
 	}
 }

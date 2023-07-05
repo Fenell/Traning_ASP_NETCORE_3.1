@@ -52,7 +52,6 @@ namespace eShopSolutiion.Data.EF
 			modelBuilder.ApplyConfiguration(new TransactionConfiguration());
 
 			//Data seeding
-			modelBuilder.Seed();
 			//Viết kiểu này dài vc
 
 			//modelBuilder.Entity<AppConfig>().HasData(

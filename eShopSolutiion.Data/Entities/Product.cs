@@ -19,5 +19,8 @@ namespace eShopSolutiion.Data.Entities
 		public ICollection<Cart> Carts { get; set; }
 		public ICollection<OrderDetail> OrderDetails { get; set; }
 		public ICollection<ProductInCategory> ProductInCategories { get; set; }
+
+		public ICollection<ProductTranslation> ProductTranslations { get; set; }
+
 	}
 }

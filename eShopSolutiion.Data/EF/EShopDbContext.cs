@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using eShopSolutiion.Data.Configurations;
 using eShopSolutiion.Data.Entities;
+using eShopSolutiion.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 
@@ -34,6 +35,8 @@ namespace eShopSolutiion.Data.EF
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			//Configure using Fluent API
+
 			modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
 			modelBuilder.ApplyConfiguration(new CartConfiguration());
 			modelBuilder.ApplyConfiguration(new CategoryConfiguration());
@@ -48,6 +51,16 @@ namespace eShopSolutiion.Data.EF
 			modelBuilder.ApplyConfiguration(new PromotionConfiguration());
 			modelBuilder.ApplyConfiguration(new TransactionConfiguration());
 
+			//Data seeding
+			modelBuilder.Seed();
+			//Viết kiểu này dài vc
+
+			//modelBuilder.Entity<AppConfig>().HasData(
+			//	new AppConfig() { Key = "Home title", Value = "This is home page of EShopSolution" },
+			//	new AppConfig() { Key = "HomeKeyword", Value = "This is key word of EShopSolution" }
+			//);
+
 		}
+
 	}
 }

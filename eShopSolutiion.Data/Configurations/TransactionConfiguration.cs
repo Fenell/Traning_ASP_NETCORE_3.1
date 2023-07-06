@@ -16,8 +16,8 @@ namespace eShopSolutiion.Data.Configurations
 			builder.HasKey(t => t.Id);
 
 			builder.Property(t => t.Id).UseIdentityColumn();
-			
-			
+
+			builder.HasOne(x => x.AppUser).WithMany(a => a.Transactions).HasForeignKey(x => x.UserId);
 		}
 	}
 }

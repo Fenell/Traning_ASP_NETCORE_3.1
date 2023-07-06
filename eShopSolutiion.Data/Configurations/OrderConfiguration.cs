@@ -23,7 +23,7 @@ namespace eShopSolutiion.Data.Configurations
 
 			builder.Property(a => a.ShipName).IsRequired().HasMaxLength(200);
 
-
+			builder.HasOne(a => a.AppUser).WithMany(x => x.Orders).HasForeignKey(a => a.UserId);
 		}
 	}
 }

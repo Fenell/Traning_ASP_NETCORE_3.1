@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eShopSolutiion.Data.EF;
 
 namespace eShopSolutiion.Data.Migrations
 {
     [DbContext(typeof(EShopDbContext))]
-    partial class EShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230706031722_AspNetCoreIdentityDatabase")]
+    partial class AspNetCoreIdentityDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,13 +94,6 @@ namespace eShopSolutiion.Data.Migrations
                     b.HasKey("RoleId", "UserId");
 
                     b.ToTable("AppUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            UserId = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -133,18 +128,6 @@ namespace eShopSolutiion.Data.Migrations
                     b.HasKey("Key");
 
                     b.ToTable("AppConfig");
-
-                    b.HasData(
-                        new
-                        {
-                            Key = "Home title",
-                            Value = "This is home page of EShopSolution"
-                        },
-                        new
-                        {
-                            Key = "HomeKeyword",
-                            Value = "This is key word of EShopSolution"
-                        });
                 });
 
             modelBuilder.Entity("eShopSolutiion.Data.Entities.AppRole", b =>
@@ -170,16 +153,6 @@ namespace eShopSolutiion.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "d89876c7-61b5-40bd-9058-934531823a06",
-                            Description = "Adminstrator role",
-                            Name = "admin",
-                            NormalizedName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("eShopSolutiion.Data.Entities.AppUser", b =>
@@ -246,26 +219,6 @@ namespace eShopSolutiion.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppUser");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "00258aaf-79bc-4106-9cd5-0d81756a03a1",
-                            DateOfBirth = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "datmt@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Mai",
-                            LastName = "Tuan Dat",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "datmt@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAELWFow7DIBa1mPT0XM7MPkJsGeGwn0dHlMb5mPWlJIlhSVGc8Ts2ER1ZZ0slz9qUzw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("eShopSolutiion.Data.Entities.Cart", b =>
@@ -322,22 +275,6 @@ namespace eShopSolutiion.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsShowOnHome = true,
-                            SortOrder = 1,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsShowOnHome = true,
-                            SortOrder = 2,
-                            Status = 1
-                        });
                 });
 
             modelBuilder.Entity("eShopSolutiion.Data.Entities.CategoryTranslation", b =>
@@ -383,48 +320,6 @@ namespace eShopSolutiion.Data.Migrations
                     b.HasIndex("LanguageId");
 
                     b.ToTable("CategoryTranslation");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            LanguageId = "vi-VN",
-                            Name = "Áo nam",
-                            SeoAlias = "ao-nam",
-                            SeoDescription = "Sản phẩm thời trang nam",
-                            SeoTitle = "Sản phẩm thời trang nam"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            LanguageId = "en-US",
-                            Name = "Men shirt",
-                            SeoAlias = "men-shirt",
-                            SeoDescription = "The shirt products for men",
-                            SeoTitle = "The shirt products for men"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 2,
-                            LanguageId = "vi-VN",
-                            Name = "Áo nữ",
-                            SeoAlias = "ao-nu",
-                            SeoDescription = "Sản phẩm thời trang nữ",
-                            SeoTitle = "Sản phẩm thời trang nữ"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 2,
-                            LanguageId = "en-US",
-                            Name = "Woman shirt",
-                            SeoAlias = "men-shirt",
-                            SeoDescription = "The shirt products for woman",
-                            SeoTitle = "The shirt products for woman"
-                        });
                 });
 
             modelBuilder.Entity("eShopSolutiion.Data.Entities.Contact", b =>
@@ -479,20 +374,6 @@ namespace eShopSolutiion.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Language");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "vi-VN",
-                            IdDefault = true,
-                            Name = "Tiếng Việt"
-                        },
-                        new
-                        {
-                            Id = "en-US",
-                            IdDefault = false,
-                            Name = "English"
-                        });
                 });
 
             modelBuilder.Entity("eShopSolutiion.Data.Entities.Order", b =>
@@ -598,17 +479,6 @@ namespace eShopSolutiion.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Product");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(2023, 7, 6, 13, 55, 18, 517, DateTimeKind.Local).AddTicks(7499),
-                            OriginalPrice = 100000m,
-                            Price = 200000m,
-                            Stock = 0,
-                            ViewCount = 0
-                        });
                 });
 
             modelBuilder.Entity("eShopSolutiion.Data.Entities.ProductInCategory", b =>
@@ -624,13 +494,6 @@ namespace eShopSolutiion.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductInCategory");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            ProductId = 1
-                        });
                 });
 
             modelBuilder.Entity("eShopSolutiion.Data.Entities.ProductTranslation", b =>
@@ -681,32 +544,6 @@ namespace eShopSolutiion.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductTranslation");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Áo sơ mi trắng coolmate",
-                            Detail = "Áo sơ mi trắng coolmate",
-                            LanguageId = "vi-VN",
-                            Name = "Áo sơ mi trắng CoolMate",
-                            ProductId = 1,
-                            SeoAlias = "ao-so-mi-trang-coolmate",
-                            SeoDescription = "Áo sơ mi trắng coolmate",
-                            SeoTitle = "Áo sơ mi trắng coolmate"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Coolmate Men T-shirt",
-                            Detail = "Coolmate Men T-shirt",
-                            LanguageId = "en-US",
-                            Name = "Coolmate Men T-shirt",
-                            ProductId = 1,
-                            SeoAlias = "coolmate-men-t-shirt",
-                            SeoDescription = "Coolmate Men T-shirt",
-                            SeoTitle = "Coolmate Men T-shirt"
-                        });
                 });
 
             modelBuilder.Entity("eShopSolutiion.Data.Entities.Promotion", b =>

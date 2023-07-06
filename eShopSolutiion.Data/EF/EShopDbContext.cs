@@ -4,12 +4,14 @@ using System.Text;
 using eShopSolutiion.Data.Configurations;
 using eShopSolutiion.Data.Entities;
 using eShopSolutiion.Data.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace eShopSolutiion.Data.EF
 {
-	public class EShopDbContext : DbContext
+	public class EShopDbContext : IdentityDbContext<AppUser, AppRole, Guid>
 	{
 		protected EShopDbContext()
 		{
@@ -38,6 +40,8 @@ namespace eShopSolutiion.Data.EF
 			//Configure using Fluent API
 
 			modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
+			modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
+			modelBuilder.ApplyConfiguration(new AppUserConfiguration());
 			modelBuilder.ApplyConfiguration(new CartConfiguration());
 			modelBuilder.ApplyConfiguration(new CategoryConfiguration());
 			modelBuilder.ApplyConfiguration(new CategoryTranslationConfiguration());
@@ -51,7 +55,15 @@ namespace eShopSolutiion.Data.EF
 			modelBuilder.ApplyConfiguration(new PromotionConfiguration());
 			modelBuilder.ApplyConfiguration(new TransactionConfiguration());
 
+			modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
+			modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x=>new{x.RoleId, x.UserId});
+			modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x=>x.UserId);
+			modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims");
+			modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x=>x.UserId);
+
 			//Data seeding
+			modelBuilder.Seed();
+
 			//Viết kiểu này dài vc
 
 			//modelBuilder.Entity<AppConfig>().HasData(

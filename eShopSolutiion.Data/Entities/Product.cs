@@ -21,6 +21,7 @@ namespace eShopSolutiion.Data.Entities
 		public ICollection<ProductInCategory> ProductInCategories { get; set; }
 
 		public ICollection<ProductTranslation> ProductTranslations { get; set; }
+		public ICollection<ProductImage> ProductImages { get; set; }
 
 	}
 }

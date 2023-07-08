@@ -12,6 +12,7 @@ using eShopSolutiion.Data.EF;
 using eShopSolution.Application.Catalog.Products;
 using Microsoft.EntityFrameworkCore;
 using eShopSolution.Utilities.Constants;
+using Microsoft.OpenApi.Models;
 
 namespace eShopSolution.BackendApi
 {
@@ -34,6 +35,11 @@ namespace eShopSolution.BackendApi
 			services.AddScoped<IPublicProductService, PublicProductService>();
 
 			services.AddControllers();
+
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new OpenApiInfo(){Title = "Swagger eShopSolution", Version = "v1"});
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +55,13 @@ namespace eShopSolution.BackendApi
 			app.UseRouting();
 
 			app.UseAuthorization();
+
+			app.UseSwagger();
+
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger eShopSolution v1");
+			});
 
 			app.UseEndpoints(endpoints =>
 			{

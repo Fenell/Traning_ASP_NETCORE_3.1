@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Threading.Tasks;
 using eShopSolutiion.Data.EF;
 using eShopSolution.ViewModels.Catalog.Products;
@@ -18,42 +19,44 @@ namespace eShopSolution.Application.Catalog.Products
 			_context = context;
 		}
 
-		public async Task<List<ProductViewModel>> GetAll()
-		{
-			var query = from p in _context.Products
-						join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-						join pic in _context.ProductInCategories on p.Id equals pic.ProductId
-						join c in _context.Categories on pic.CategoryId equals c.Id
-						select new { p, pt, pic };
+		//public async Task<List<ProductViewModel>> GetAll(string languageId)
+		//{
+		//	var query = from p in _context.Products
+		//				join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+		//				join pic in _context.ProductInCategories on p.Id equals pic.ProductId
+		//				join c in _context.Categories on pic.CategoryId equals c.Id
+		//				where pt.LanguageId == languageId
+		//				select new { p, pt, pic };
 
-			var data = await query.Select(a => new ProductViewModel()
-			{
-				Id = a.p.Id,
-				Name = a.pt.Name,
-				DateCreated = a.p.DateCreated,
-				Description = a.pt.Description,
-				Detail = a.pt.Detail,
-				LanguageId = a.pt.LanguageId,
-				OriginalPrice = a.p.OriginalPrice,
-				Price = a.p.Price,
-				SeoAlias = a.pt.SeoAlias,
-				SeoDescription = a.pt.SeoDescription,
-				SeoTitle = a.pt.SeoTitle,
-				Stock = a.p.Stock,
-				ViewCount = a.p.ViewCount
-			}).ToListAsync();
+		//	var data = await query.Select(a => new ProductViewModel()
+		//	{
+		//		Id = a.p.Id,
+		//		Name = a.pt.Name,
+		//		DateCreated = a.p.DateCreated,
+		//		Description = a.pt.Description,
+		//		Detail = a.pt.Detail,
+		//		LanguageId = a.pt.LanguageId,
+		//		OriginalPrice = a.p.OriginalPrice,
+		//		Price = a.p.Price,
+		//		SeoAlias = a.pt.SeoAlias,
+		//		SeoDescription = a.pt.SeoDescription,
+		//		SeoTitle = a.pt.SeoTitle,
+		//		Stock = a.p.Stock,
+		//		ViewCount = a.p.ViewCount
+		//	}).ToListAsync();
 
-			return data;
+		//	return data;
 
-		}
+		//}
 
-		public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request)
+		public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
 		{
 			// 1.Select join
 			var query = from p in _context.Products
 						join pt in _context.ProductTranslations on p.Id equals pt.ProductId
 						join pic in _context.ProductInCategories on p.Id equals pic.ProductId
 						join c in _context.Categories on pic.CategoryId equals c.Id
+						where pt.LanguageId == languageId
 						select new { p, pt, pic };
 
 			//2. filter

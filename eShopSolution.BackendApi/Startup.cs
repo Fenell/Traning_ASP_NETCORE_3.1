@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using eShopSolutiion.Data.EF;
 using eShopSolution.Application.Catalog.Products;
+using eShopSolution.Application.Common;
 using Microsoft.EntityFrameworkCore;
 using eShopSolution.Utilities.Constants;
 using Microsoft.OpenApi.Models;
@@ -33,6 +34,8 @@ namespace eShopSolution.BackendApi
 
 			//Declare DI
 			services.AddScoped<IPublicProductService, PublicProductService>();
+			services.AddScoped<IManageProductService, ManageProductService>();
+			services.AddScoped<IStorageService, FileStorageService>();
 
 			services.AddControllers();
 

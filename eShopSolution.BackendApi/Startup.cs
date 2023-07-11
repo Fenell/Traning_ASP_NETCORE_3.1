@@ -9,10 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eShopSolutiion.Data.EF;
+using eShopSolutiion.Data.Entities;
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Common;
+using eShopSolution.Application.System.Users;
 using Microsoft.EntityFrameworkCore;
 using eShopSolution.Utilities.Constants;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 
 namespace eShopSolution.BackendApi
@@ -32,16 +35,28 @@ namespace eShopSolution.BackendApi
 			services.AddDbContext<EShopDbContext>(option =>
 				option.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
+			services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<EShopDbContext>().AddDefaultTokenProviders();
+
 			//Declare DI
 			services.AddScoped<IPublicProductService, PublicProductService>();
 			services.AddScoped<IManageProductService, ManageProductService>();
 			services.AddScoped<IStorageService, FileStorageService>();
+			services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
+			services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
+			services.AddScoped<IUserService, UserService>();
 
 			services.AddControllers();
 
 			services.AddSwaggerGen(c =>
 			{
-				c.SwaggerDoc("v1", new OpenApiInfo(){Title = "Swagger eShopSolution", Version = "v1"});
+				c.SwaggerDoc("v1", new OpenApiInfo() { Title = "Swagger eShopSolution", Version = "v1" });
+			});
+
+			services.Configure<IdentityOptions>(option =>
+			{
+				option.Password.RequireUppercase = false;
+				option.Password.RequiredLength = 6;
+				option.Password.RequireNonAlphanumeric = false;
 			});
 		}
 

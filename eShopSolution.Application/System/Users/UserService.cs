@@ -52,8 +52,8 @@ namespace eShopSolution.Application.System.Users
 			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 			var token = new JwtSecurityToken(
-				issuer: _config["Token:Issuer"],
-				audience: _config["Token: Issuer"],
+				issuer: _config["Tokens:Issuer"],
+				audience: _config["Tokens:Issuer"],
 				signingCredentials: creds,
 				claims: lstClaims,
 				expires: DateTime.Now.AddHours(3)

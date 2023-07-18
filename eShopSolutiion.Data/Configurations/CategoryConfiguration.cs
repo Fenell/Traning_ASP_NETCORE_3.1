@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using eShopSolutiion.Data.Entities;
+﻿using eShopSolutiion.Data.Entities;
 using eShopSolutiion.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace eShopSolutiion.Data.Configurations
+namespace eShopSolution.Data.Configurations
 {
 	public class CategoryConfiguration:IEntityTypeConfiguration<Category>
 	{

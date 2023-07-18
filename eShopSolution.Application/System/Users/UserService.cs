@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using eShopSolutiion.Data.Entities;
+using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -44,7 +47,8 @@ namespace eShopSolution.Application.System.Users
 			{
 				new Claim(ClaimTypes.Email, user.Email),
 				new Claim(ClaimTypes.GivenName, user.LastName),
-				new Claim(ClaimTypes.Role, string.Join(";", role))
+				new Claim(ClaimTypes.Role, string.Join(";", role)),
+				new Claim(ClaimTypes.Name,user.UserName )
 			};
 
 			//Mã hóa Claim
@@ -77,6 +81,41 @@ namespace eShopSolution.Application.System.Users
 			var result = await _userManager.CreateAsync(user, request.Password);
 
 			return result.Succeeded;
+		}
+
+		public async Task<PagedResult<UserViewModel>> GetUserList(GetUserPagingRequest request)
+		{
+			//1 query
+			var query = _userManager.Users;
+
+			//2 filter
+			if (!string.IsNullOrEmpty(request.Keyword))
+			{
+				query = query.Where(
+					c => c.UserName.Contains(request.Keyword) || c.PhoneNumber.Contains(request.Keyword));
+			}
+
+			//3 Paging
+			var totalRow = await query.CountAsync();
+			var page = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).Select(c =>
+				new UserViewModel()
+				{
+					Id = c.Id,
+					FirstName = c.FirstName,
+					LastName = c.LastName,
+					UserName = c.UserName,
+					PhoneNumber = c.PhoneNumber,
+					Email = c.Email
+				}).ToListAsync();
+
+			//4 select and projection
+			var pageResult = new PagedResult<UserViewModel>()
+			{
+				TotalRecode = totalRow,
+				Items = page
+			};
+
+			return pageResult;
 		}
 	}
 }

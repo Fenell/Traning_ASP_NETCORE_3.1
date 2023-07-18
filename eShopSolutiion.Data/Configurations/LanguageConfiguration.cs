@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
-using eShopSolutiion.Data.Entities;
+﻿using eShopSolutiion.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace eShopSolutiion.Data.Configurations
+namespace eShopSolution.Data.Configurations
 {
 	public class LanguageConfiguration:IEntityTypeConfiguration<Language>
 	{

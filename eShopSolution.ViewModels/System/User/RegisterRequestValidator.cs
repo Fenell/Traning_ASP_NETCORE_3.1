@@ -23,15 +23,15 @@ namespace eShopSolution.ViewModels.System.User
 
 			RuleFor(a => a.PhoneNumber).NotEmpty().WithMessage("Phone number is required");
 
-			RuleFor(a => a.UserName).NotEmpty().WithMessage("User name is required");
-			RuleFor(a => a.Password).NotEmpty().WithMessage("User name is required").MinimumLength(6)
-				.WithMessage("Password is at least 6 characters");
+			RuleFor(a => a.UserName).NotEmpty().WithMessage("Tên tài khoản không được để trống");
+			RuleFor(a => a.Password).NotEmpty().WithMessage("Mật khẩu không được để trống").MinimumLength(6)
+				.WithMessage("Mật khẩu cần nhiều hơn 6 ký tự");
 
 			RuleFor(a => a).Custom((request, context) =>
 			{
 				if (request.Password != request.ComfirmPassword)
 				{
-					context.AddFailure("Confirm password is not match");
+					context.AddFailure("Mật khẩu không trùng khớp");
 				}
 			});
 		}

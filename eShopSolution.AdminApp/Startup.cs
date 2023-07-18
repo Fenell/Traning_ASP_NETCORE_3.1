@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eShopSolution.ViewModels.System.User;
+using eShopSolution.AdminApp.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace eShopSolution.AdminApp
 {
@@ -23,7 +27,20 @@ namespace eShopSolution.AdminApp
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllersWithViews();
+			services.AddControllersWithViews().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(opt =>
+			{
+				opt.LoginPath = "/login";
+			});
+			services.AddHttpClient();
+            services.AddDistributedMemoryCache();
+			services.AddSession(opt =>
+			{
+				opt.IdleTimeout = TimeSpan.FromMinutes(10);
+			});
+			services.AddScoped<IUserApiClient, UserApiClient>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +59,9 @@ namespace eShopSolution.AdminApp
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
-			app.UseRouting();
+            app.UseSession();
+            app.UseRouting();
+			app.UseAuthentication();
 
 			app.UseAuthorization();
 

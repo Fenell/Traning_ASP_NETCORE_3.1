@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace eShopSolution.Application.Catalog.Products
 {
-    public interface IManageProductService
+    public interface IProductService
 	{
 		Task<int> Create(ProductCreateRequest request);
 
@@ -26,6 +26,7 @@ namespace eShopSolution.Application.Catalog.Products
 		Task AddViewCount(int productId);
 
 		Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
+		Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
 
 		Task<int> AddImage(int productId, ProductImageCreateRequest request);
 

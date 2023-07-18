@@ -10,19 +10,18 @@ using eShopSolution.Application.Common;
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
-using eShopSolution.ViewModels.Catalog.Products.Public;
 using eShopSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace eShopSolution.Application.Catalog.Products
 {
-	public class ManageProductService : IManageProductService
+	public class ProductService : IProductService
 	{
 		private readonly EShopDbContext _context;
 		private readonly IStorageService _storageService;
 
-		public ManageProductService(EShopDbContext context, IStorageService storageService)
+		public ProductService(EShopDbContext context, IStorageService storageService)
 		{
 			_context = context;
 			_storageService = storageService;
@@ -168,6 +167,53 @@ namespace eShopSolution.Application.Catalog.Products
 			if (request.CategoryIds.Count > 0)
 			{
 				query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
+			}
+
+			//3. paging (phân trang)
+			int totalRow = await query.CountAsync();
+			var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
+				.Take(request.PageSize)
+				.Select(a => new ProductViewModel()
+				{
+					Id = a.p.Id,
+					Name = a.pt.Name,
+					DateCreated = a.p.DateCreated,
+					Description = a.pt.Description,
+					Detail = a.pt.Detail,
+					LanguageId = a.pt.LanguageId,
+					OriginalPrice = a.p.OriginalPrice,
+					Price = a.p.Price,
+					SeoAlias = a.pt.SeoAlias,
+					SeoDescription = a.pt.SeoDescription,
+					SeoTitle = a.pt.SeoTitle,
+					Stock = a.p.Stock,
+					ViewCount = a.p.ViewCount
+				}).ToListAsync();
+
+			//4.select and projection
+			var pageResult = new PagedResult<ProductViewModel>()
+			{
+				TotalRecode = totalRow,
+				Items = data
+			};
+
+			return pageResult;
+		}
+
+		public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
+		{
+			// 1.Select join
+			var query = from p in _context.Products
+				join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+				join pic in _context.ProductInCategories on p.Id equals pic.ProductId
+				join c in _context.Categories on pic.CategoryId equals c.Id
+				where pt.LanguageId == languageId
+				select new { p, pt, pic };
+
+			//2. filter
+			if (request.CategoryId.HasValue && request.CategoryId.Value > 0)
+			{
+				query = query.Where(p => p.pic.CategoryId == request.CategoryId);
 			}
 
 			//3. paging (phân trang)

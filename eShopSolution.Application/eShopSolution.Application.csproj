@@ -10,10 +10,6 @@
     <ProjectReference Include="..\eShopSolution.ViewModels\eShopSolution.ViewModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Catalog\Products\Dtos\" />
-  </ItemGroup>
-
 	<ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>

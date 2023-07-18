@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using eShopSolutiion.Data.Configurations;
 using eShopSolutiion.Data.Entities;
-using eShopSolutiion.Data.Extensions;
+using eShopSolution.Data.Configurations;
+using eShopSolution.Data.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

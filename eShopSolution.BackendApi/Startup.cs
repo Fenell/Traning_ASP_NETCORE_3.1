@@ -45,8 +45,8 @@ namespace eShopSolution.BackendApi
 			services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<EShopDbContext>().AddDefaultTokenProviders();
 
 			//Declare DI
-			services.AddScoped<IPublicProductService, PublicProductService>();
-			services.AddScoped<IManageProductService, ManageProductService>();
+			services.AddScoped<IProductService, ProductService>();
+			services.AddScoped<IProductService, ProductService>();
 			services.AddScoped<IStorageService, FileStorageService>();
 			services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
 			services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();

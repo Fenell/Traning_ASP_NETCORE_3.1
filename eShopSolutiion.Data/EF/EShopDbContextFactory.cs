@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
+using eShopSolutiion.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace eShopSolutiion.Data.EF
+namespace eShopSolution.Data.EF
 {
-	internal class EShopDbContextFactory:IDesignTimeDbContextFactory<EShopDbContext>
+	public class EShopDbContextFactory:IDesignTimeDbContextFactory<EShopDbContext>
 	{
 		public EShopDbContext CreateDbContext(string[] args)
 		{

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using eShopSolution.ViewModels.System.User;
 using eShopSolution.AdminApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace eShopSolution.AdminApp
 {
@@ -32,6 +33,9 @@ namespace eShopSolution.AdminApp
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie(opt =>
 			{
+				opt.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+				opt.Cookie.HttpOnly = true;
+                opt.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 				opt.LoginPath = "/login";
 			});
 			services.AddHttpClient();
@@ -41,7 +45,8 @@ namespace eShopSolution.AdminApp
 				opt.IdleTimeout = TimeSpan.FromMinutes(10);
 			});
 			services.AddScoped<IUserApiClient, UserApiClient>();
-		}
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

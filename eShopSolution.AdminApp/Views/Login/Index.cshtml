@@ -47,16 +47,17 @@
 										<h1 class="h4 text-gray-900 mb-4">Đăng nhập</h1>
 									</div>
 									<form asp-action="Index" asp-controller="Login" method="post" class="user">
+										<div asp-validation-summary="ModelOnly", class="text-danger"></div>
 										<div class="form-group">
 											<input type="text" class="form-control form-control-user"
-												   aria-describedby="emailHelp"
-												   asp-for="UserName"
-												   placeholder="Nhập tên tài khoàn...">
+											       aria-describedby="emailHelp"
+											       asp-for="UserName"
+											       placeholder="Nhập tên tài khoàn...">
 										</div>
 										<div class="form-group">
 											<input type="password" class="form-control form-control-user"
-												   asp-for="Password"
-												   placeholder="Mật khẩu">
+											       asp-for="Password"
+											       placeholder="Mật khẩu">
 										</div>
 										<div class="form-group">
 											<div class="custom-control custom-checkbox small">

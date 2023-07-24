@@ -33,7 +33,7 @@ namespace eShopSolution.AdminApp
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie(opt =>
 			{
-				opt.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+				opt.ExpireTimeSpan = TimeSpan.FromMinutes(2);
 				opt.Cookie.HttpOnly = true;
                 opt.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 				opt.LoginPath = "/login";

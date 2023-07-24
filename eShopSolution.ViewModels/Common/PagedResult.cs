@@ -2,10 +2,8 @@
 
 namespace eShopSolution.ViewModels.Common
 {
-	public class PagedResult<T>
+	public class PagedResult<T>:PagedResultBase
 	{
-		public List<T> Items { get; set; }
-
-		public int TotalRecode { get; set; }
+        public List<T> Items { get; set; }
 	}
 }

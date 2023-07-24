@@ -13,7 +13,7 @@ namespace eShopSolutiion.Data.EF
 {
 	public class EShopDbContext : IdentityDbContext<AppUser, AppRole, Guid>
 	{
-		protected EShopDbContext()
+		public EShopDbContext()
 		{
 		}
 

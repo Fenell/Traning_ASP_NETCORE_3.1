@@ -41,6 +41,7 @@ namespace eShopSolution.AdminApp.Controllers
 
             if (!response.IsSuccess)
             {
+                ModelState.AddModelError("", response.Message);
                 return View();
             }
 
